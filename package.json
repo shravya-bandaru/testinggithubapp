@@ -1,0 +1,20 @@
+{
+  "name": "testinggithubapp",
+  "version": "1.0.0",
+  "description": "Azure Web App using Key Vault secrets and GitHub App authentication",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@azure/identity": "^4.5.0",
+    "@azure/keyvault-secrets": "^4.8.0",
+    "@octokit/auth-app": "^7.1.1",
+    "express": "^4.21.1",
+    "octokit": "^4.0.2"
+  }
+}

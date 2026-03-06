@@ -15,6 +15,9 @@ param keyVaultName string
 ])
 param appServiceSku string = 'B1'
 
+@description('Set to true only if the deployment identity can create RBAC role assignments')
+param createRoleAssignments bool = false
+
 var appServicePlanName = '${webAppName}-plan'
 var roleDefinitionId = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '4633458b-17de-408a-b874-0445c86b69e6')
 
@@ -91,7 +94,7 @@ resource webApp 'Microsoft.Web/sites@2023-12-01' = {
   }
 }
 
-resource kvSecretsUserRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource kvSecretsUserRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (createRoleAssignments) {
   name: guid(keyVault.id, webApp.id, 'kv-secrets-user')
   scope: keyVault
   properties: {

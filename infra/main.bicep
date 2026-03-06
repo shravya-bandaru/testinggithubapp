@@ -9,11 +9,12 @@ param keyVaultName string
 
 @description('App Service plan SKU')
 @allowed([
+  'F1'
   'B1'
   'S1'
   'P1v3'
 ])
-param appServiceSku string = 'B1'
+param appServiceSku string = 'F1'
 
 @description('Set to true only if the deployment identity can create RBAC role assignments')
 param createRoleAssignments bool = false
@@ -27,8 +28,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2023-12-01' = {
   kind: 'linux'
   sku: {
     name: appServiceSku
-    tier: appServiceSku == 'B1' ? 'Basic' : (appServiceSku == 'S1' ? 'Standard' : 'PremiumV3')
-    capacity: 1
+    tier: appServiceSku == 'F1' ? 'Free' : (appServiceSku == 'B1' ? 'Basic' : (appServiceSku == 'S1' ? 'Standard' : 'PremiumV3'))
   }
   properties: {
     reserved: true
